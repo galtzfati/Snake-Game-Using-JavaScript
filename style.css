@@ -1,0 +1,95 @@
+body {
+    text-align: center;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+}
+
+#divMenu {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    color: #333;
+    font-weight: 900;
+    font-family: 'fantasy', cursive;
+}
+
+#divMenu button {
+    width: 80px;
+    font-family: 'cursive', cursive;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 3px solid #555;
+    color: #fff;
+    background-color: #4CAF50;
+    cursor: pointer;
+}
+
+#divMenu #divMenuSettings {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    font-size: 20px;
+}
+
+#buttonLevel:hover + #divLevelContent, #divLevelContent:hover {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    margin-left: 65px;
+}
+
+#divLevelContent button {
+    cursor: pointer;
+}
+
+#divLevelContent button:hover {
+    border-color: #333;
+    background-color: #ddd;
+    color: #333;
+}
+
+#divLevelContent {
+    display: none;
+}
+
+#divGame {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#canvasGameContainer {
+    border: 5px solid #333;
+    background-color: #ddd;
+}
+
+#labelScore {
+    font-family: 'fantasy', cursive;
+    font-size: 50px;
+    color: #ff5722;
+    text-shadow: 1px 1px 3px #444;
+}
+
+#divGame button {
+    color: #fff;
+    font-family: 'cursive', cursive;
+    font-weight: bold;
+    padding: 5px 10px;
+    font-size: larger;
+    cursor: pointer;
+    border-radius: 10px;
+    border-color: #333;
+    background-color: #2196F3;
+}
+
+#divOpButtons button:hover {
+    border-color: #FFBA53;
+    background-color: #FFD700;
+    color: #A06B6B;
+    text-shadow: 1px 1px 3px #FF8C00;
+}

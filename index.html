@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Snake</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div id="divMenu">
+            <h1><u>Snake Game</u></h1>
+            <div id="divMenuSettings">
+                <div id="divLevelChoice">
+                    <label id="labelLevel">Level:</label>
+                    <button id="buttonLevel">Easy</button>
+                    <div id="divLevelContent">
+                        <button class="levelButtons" id="buttonLevelEasy">Easy</button>
+                        <button class="levelButtons" id="buttonLevelMedium">Medium</button>
+                        <button class="levelButtons" id="buttonLevelHard">Hard</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="divGame">
+            <canvas id="canvasGameContainer" height="300px" width="300px"></canvas>
+            <label id="labelScore">0</label>
+            <div id="divOpButtons">
+                <button id="buttonReset">Reset</button>
+            </div>
+        </div>
+    </body>
+    <script>
+        function updateLevel(level) {
+            const buttonLevel = document.getElementById("buttonLevel");
+            buttonLevel.textContent = level;
+        }
+        const levelButtons = document.querySelectorAll(".levelButtons");
+        levelButtons.forEach(button => button.addEventListener("click", () => updateLevel(button.textContent)));
+    </script>
+    <script type="module" src="index.js"></script>
+</html>
