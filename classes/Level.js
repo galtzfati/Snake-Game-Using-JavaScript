@@ -1,18 +1,18 @@
 class Level {
-    _snakeSpeed;
-    _withTunnels;
+    #snakeSpeed;
+    #withTunnels;
 
     set snakeSpeed(snakeSpeed) {
-        this._snakeSpeed = snakeSpeed;
+        this.#snakeSpeed = snakeSpeed;
     }
     set withTunnels(withTunnels) {
-        this._withTunnels = withTunnels;
+        this.#withTunnels = withTunnels;
     }
     get snakeSpeed() {
-        return this._snakeSpeed;
+        return this.#snakeSpeed;
     }
     get withTunnels() {
-        return this._withTunnels;
+        return this.#withTunnels;
     }
 }
 export {Level};

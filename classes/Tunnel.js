@@ -1,17 +1,17 @@
 class Tunnel {
-    _position;
-    _exitTunnel;
+    #position;
+    #exitTunnel;
     get exitTunnel() {
-        return this._exitTunnel;
+        return this.#exitTunnel;
     }
     set exitTunnel(exitTunnel) {
-        this._exitTunnel = exitTunnel;
+        this.#exitTunnel = exitTunnel;
     }
     get position() {
-        return this._position;
+        return this.#position;
     }
     set position(position) {
-        this._position = position;
+        this.#position = position;
     }
 }
 export {Tunnel};

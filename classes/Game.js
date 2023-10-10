@@ -12,67 +12,67 @@ import { Tunnel } from "./Tunnel.js";
 import { Entity } from "./Entity.js";
 import * as Keys from "./Keys.js";
 class Game {
-    _board;
-    _snake;
-    _food;
-    _lastSnakeDirection = "Stop";
-    _snakeMovingInterval = new Interval();
-    _scoreLabel = document.getElementById("labelScore");
-    _level;
-    _gameStarted = false;
-    _tunnels;
+    #board;
+    #snake;
+    #food;
+    #lastSnakeDirection = "Stop";
+    #snakeMovingInterval = new Interval();
+    #scoreLabel = document.getElementById("labelScore");
+    #level;
+    #gameStarted = false;
+    #tunnels;
 
     constructor() {
       let height = Screen.board.height / Settings.unitSize;
       let width = Screen.board.width / Settings.unitSize;
-      this._board = new Board(height, width);
-      this._snake = new Snake(this._board, Settings.snakeColor);
-      this._food = new Food(this._board, Settings.foodColor);
-      this.init();
-      this.listen();
+      this.#board = new Board(height, width);
+      this.#snake = new Snake(this.#board, Settings.snakeColor);
+      this.#food = new Food(this.#board, Settings.foodColor);
+      this.#init();
+      this.#listen();
     }
-    init() {
-      this._scoreLabel.textContent = 0;
-      this._lastSnakeDirection = "Stop";
+    #init() {
+      this.#scoreLabel.textContent = 0;
+      this.#lastSnakeDirection = "Stop";
       Screen.clear();
-      this._board.init();
-      this._snake.init();
+      this.#board.init();
+      this.#snake.init();
     }
-    isMovementKey(keyPressed) {
+    #isMovementKey(keyPressed) {
       return keyPressed == Keys.UP || keyPressed == Keys.DOWN
           || keyPressed == Keys.LEFT || keyPressed == Keys.RIGHT;
     }
-    setSnakeDirection(keyPressed) {
+    #setSnakeDirection(keyPressed) {
       switch (keyPressed) {
         case Keys.UP:
-          this._lastSnakeDirection = this._lastSnakeDirection == "Down" ? "Down" : "Up";
+          this.#lastSnakeDirection = this.#lastSnakeDirection == "Down" ? "Down" : "Up";
           break;
         case Keys.DOWN:
-          this._lastSnakeDirection = this._lastSnakeDirection == "Up" ? "Up" : "Down";
+          this.#lastSnakeDirection = this.#lastSnakeDirection == "Up" ? "Up" : "Down";
           break;
         case Keys.LEFT:
-          this._lastSnakeDirection = this._lastSnakeDirection == "Right" ? "Right" : "Left";
+          this.#lastSnakeDirection = this.#lastSnakeDirection == "Right" ? "Right" : "Left";
           break;
         case Keys.RIGHT:
-          this._lastSnakeDirection = this._lastSnakeDirection == "Left" ? "Left" : "Right";
+          this.#lastSnakeDirection = this.#lastSnakeDirection == "Left" ? "Left" : "Right";
           break;
       }
     }
-    listenToUserKeys() {
+    #listenToUserKeys() {
         document.addEventListener("keydown", (event) => {
-          if (!this._gameStarted && this.isMovementKey(event.key)) {
-            this._gameStarted = true;
-            this.setSnakeDirection(event.key);
+          if (!this.#gameStarted && this.#isMovementKey(event.key)) {
+            this.#gameStarted = true;
+            this.#setSnakeDirection(event.key);
             this.start();
           }
           else {
-            this.setSnakeDirection(event.key);
+            this.#setSnakeDirection(event.key);
           }
         });
     }
-    moveSnake() {
-      let newHeadPosition = this._snake.head;
-      switch (this._lastSnakeDirection) {
+    #moveSnake() {
+      let newHeadPosition = this.#snake.head;
+      switch (this.#lastSnakeDirection) {
         case "Up":
           newHeadPosition = new Position(newHeadPosition.x, newHeadPosition.y - 1);
           break;
@@ -88,49 +88,49 @@ class Game {
         case "Stop":
           return;
       }
-      if (this._board.inBounds(newHeadPosition) && !this._snake.isBitHimself(newHeadPosition)) {
-        if (Position.areEqual(newHeadPosition, this._food.position)) {
-          this._scoreLabel.textContent = Number(this._scoreLabel.textContent) + 1;
-          this._food.move();
-          this._snake.grow(newHeadPosition);
+      if (this.#board.inBounds(newHeadPosition) && !this.#snake.isBitHimself(newHeadPosition)) {
+        if (Position.areEqual(newHeadPosition, this.#food.position)) {
+          this.#scoreLabel.textContent = Number(this.#scoreLabel.textContent) + 1;
+          this.#food.move();
+          this.#snake.grow(newHeadPosition);
         }
-        else if (this._board.inTunnel(newHeadPosition)) {
-          let tunnelPosition = [...this._tunnels.keys()].find(position => Position.areEqual(position, newHeadPosition));
-          let tunnel = this._tunnels.get(tunnelPosition);
-          newHeadPosition.x = tunnel.exitTunnel.position.x + (newHeadPosition.x - this._snake.head.x);
-          newHeadPosition.y = tunnel.exitTunnel.position.y + (newHeadPosition.y - this._snake.head.y);
-          this._snake.move(newHeadPosition);
+        else if (this.#board.inTunnel(newHeadPosition)) {
+          let tunnelPosition = [...this.#tunnels.keys()].find(position => Position.areEqual(position, newHeadPosition));
+          let tunnel = this.#tunnels.get(tunnelPosition);
+          newHeadPosition.x = tunnel.exitTunnel.position.x + (newHeadPosition.x - this.#snake.head.x);
+          newHeadPosition.y = tunnel.exitTunnel.position.y + (newHeadPosition.y - this.#snake.head.y);
+          this.#snake.move(newHeadPosition);
         }
         else {
-          this._snake.move(newHeadPosition);
+          this.#snake.move(newHeadPosition);
         }
       }
       else {
-        this._snakeMovingInterval.clearInterval();
+        this.#snakeMovingInterval.clearInterval();
         Screen.write("Game Over");
       }
     }
     start() {
-      this._level = this.getLevel();
-      if (this._level.withTunnels) {
-        this.createTunnels();
+      this.#level = this.#getLevel();
+      if (this.#level.withTunnels) {
+        this.#createTunnels();
       }
-      this._food.init();
-      this._snakeMovingInterval.interval = setInterval(() => this.moveSnake(), this._level.snakeSpeed);
+      this.#food.init();
+      this.#snakeMovingInterval.interval = setInterval(() => this.#moveSnake(), this.#level.snakeSpeed);
     }
-    listenToResetButton() {
+    #listenToResetButton() {
       const resetButton = document.getElementById("buttonReset");
       resetButton.addEventListener("click", () => {
-        this._snakeMovingInterval.clearInterval();
-        this._gameStarted = false;
-        this.init();
+        this.#snakeMovingInterval.clearInterval();
+        this.#gameStarted = false;
+        this.#init();
       });
     }
-    listen() {
-      this.listenToUserKeys();
-      this.listenToResetButton();
+    #listen() {
+      this.#listenToUserKeys();
+      this.#listenToResetButton();
     }
-    getLevel() {
+    #getLevel() {
       let level = new Level();
       const buttonLevel = document.getElementById("buttonLevel");
       switch (buttonLevel.textContent) {
@@ -149,12 +149,12 @@ class Game {
       }
       return level;
     }
-    createTunnels() {
+    #createTunnels() {
       let tunnel1 = new Tunnel();
-      tunnel1.position = new Position(this._board.width / 2, 5);
+      tunnel1.position = new Position(this.#board.width / 2, 5);
       
       let tunnel2 = new Tunnel();
-      tunnel2.position = new Position(this._board.width / 2, this._board._height - 5);
+      tunnel2.position = new Position(this.#board.width / 2, this.#board.height - 5);
       
       let tunnel3 = new Tunnel();
       tunnel3.position = new Position(0, 0);
@@ -163,13 +163,13 @@ class Game {
       tunnel2.exitTunnel = tunnel1;
       tunnel3.exitTunnel = tunnel2;
 
-      this._tunnels = new Map();
-      this._tunnels.set(tunnel1.position, tunnel1);
-      this._tunnels.set(tunnel2.position, tunnel2);
-      this._tunnels.set(tunnel3.position, tunnel3);
+      this.#tunnels = new Map();
+      this.#tunnels.set(tunnel1.position, tunnel1);
+      this.#tunnels.set(tunnel2.position, tunnel2);
+      this.#tunnels.set(tunnel3.position, tunnel3);
 
-      for (const tunnel of this._tunnels.values()) {
-        this._board.insert(tunnel.position, Entity.TUNNEL);
+      for (const tunnel of this.#tunnels.values()) {
+        this.#board.insert(tunnel.position, Entity.TUNNEL);
         Screen.paint(tunnel.position, Settings.tunnelColor);
       }
     }

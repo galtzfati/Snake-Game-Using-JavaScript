@@ -2,29 +2,29 @@ import { Entity } from "./Entity.js";
 import { Screen } from "./Screen.js";
 import * as Settings from "./Settings.js";
 class Food {
-    _position;
-    _board;
+    #position;
+    #board;
 
     constructor(board) {
-        this._board = board;
+        this.#board = board;
     }
     get position() {
-        return this._position;
+        return this.#position;
     }
     set position(position) {
-        this._position = position;
+        this.#position = position;
     }
     get color() {
         return this._color;
     }
     init() {
-        this._position = this._board.getRandomalFreePosition(null);
-        Screen.paint(this._position, Settings.foodColor);
+        this.#position = this.#board.getRandomalFreePosition(null);
+        Screen.paint(this.#position, Settings.foodColor);
     }
     move() {
-        this._position = this._board.getRandomalFreePosition(this._position);
-        Screen.paint(this._position, Settings.foodColor);
-        this._board.insert(this._position, Entity.FOOD);
+        this.#position = this.#board.getRandomalFreePosition(this.#position);
+        Screen.paint(this.#position, Settings.foodColor);
+        this.#board.insert(this.#position, Entity.FOOD);
     }
 }
 export {Food};

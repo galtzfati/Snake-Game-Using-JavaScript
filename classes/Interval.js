@@ -1,18 +1,18 @@
 class Interval {
-    _interval = null;
+    #interval = null;
 
     set interval(interval) {
-        if (!this._interval) {
-            this._interval = interval;
+        if (!this.#interval) {
+            this.#interval = interval;
         }
     }
     get interval() {
-        return this._interval;
+        return this.#interval;
     }
     clearInterval() {
-        if (this._interval) {
-            clearInterval(this._interval);
-            this._interval = null;
+        if (this.#interval) {
+            clearInterval(this.#interval);
+            this.#interval = null;
         }
     }
 }
